@@ -24,7 +24,7 @@ public class ApkYukleme {
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,platformIsmi);
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,version);
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,automation);
-        capabilities.setCapability(MobileCapabilityType.APP,"C:\\Users\\Ayten\\IdeaProjects\\Appium_T-108\\Apps\\APK Info_1.2.11_Apkpure.apk");
+        capabilities.setCapability(MobileCapabilityType.APP,"F:\\JAVA ve selenium githup clone\\appim clone\\Appium\\Apps\\Kiwi.com - Book Cheap Flights_2023.15.0_Apkpure.apk");
 
         driver=new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:4723/wd/hub"),capabilities);
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);

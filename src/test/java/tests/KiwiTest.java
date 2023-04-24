@@ -1,32 +1,27 @@
 package tests;
 
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.KiwiPage;
 import utils.Driver;
 
+import java.time.Duration;
+
 public class KiwiTest {
-    // uygulamanin yuklendigi dogrulanir
-// uygulamanin basariyla acildigi dogrulanir
-// misafir olarak devam et e tiklanir
-// ardinda gelecek olan 3 adimada yesil butona basilarak devam edilir
-// Trip type,one way olarak secilir
-// kalkis ulkesi secenegine tiklanir ve default olan ulke kaldirilir
-// kalkis yapilacak ulke/sehir girilir ve sec e tiklanir
-// varis ulkesi secenegine tiklanir ve gidilecek ulke girilir
-// gidis tarihi mayis ayinin 21 i olarak secilir ve set date e tiklanir
-// search butonuna tiklanir
-// en  ucuz ve aktarmasiz filtrelemeleri yapilir
-// gelen bilet fiyati kaydedilir ve kullanicin telefonuna sms olarak gonderilir
+
     AndroidDriver<AndroidElement> driver=Driver.getAndroidDriver();
 
     KiwiPage page=new KiwiPage();
     @Test
-    public void kiwiTest(){
+    public void kiwiTest() throws InterruptedException {
         // uygulamanin yuklendigi dogrulanir
         Assert.assertTrue(driver.isAppInstalled("com.skypicker.main"),"uygulama yuklenemedi");
+
         // uygulamanin basariyla acildigi dogrulanir
        String yaziTextActual= page.asAGuest.getText();
        String yaziTextExpected="Continue as a guest";
@@ -46,11 +41,31 @@ public class KiwiTest {
         driver.getKeyboard().pressKey("izmir");
         page.izmir.click();
         page.choose.click();
-    // varis ulkesi secenegine tiklanir ve gidilecek ulke girilir
-    // gidis tarihi mayis ayinin 21 i olarak secilir ve set date e tiklanir
-    // search butonuna tiklanir
-    // en  ucuz ve aktarmasiz filtrelemeleri yapilir
-    // gelen bilet fiyati kaydedilir ve kullanicin telefonuna sms olarak gonderilir
+        // varis ulkesi secenegine tiklanir ve gidilecek ulke girilir
+        page.anyWhere.click();
+        driver.getKeyboard().pressKey("berlin");
+        page.berlin.click();
+        page.choose.click();
+        page.anyTimeButtonClick();
+        // gidis tarihi mayis ayinin 21 i olarak secilir ve set date e tiklanir
+        Thread.sleep(2000);
+        TouchAction action=new TouchAction<>(driver);
+        action.press(PointOption.point(542,1361)).
+                waitAction(WaitOptions.waitOptions(Duration.ofMillis(500))).
+                moveTo(PointOption.point(514,208)).release().perform();
+        Thread.sleep(1500);
+        action.press(PointOption.point(115,1000)).release().perform();
+        page.setDateButton.click();
 
+        // search butonuna tiklanir
+        page.searchButton.click();
+        // en  ucuz ve aktarmasiz filtrelemeleri yapilir
+        page.bestPrice.click();
+        page.cheapest.click();
+        page.stops.click();
+        page.nonStop.click();
+        // gelen bilet fiyati kaydedilir ve kullanicin telefonuna sms olarak gonderilir
+        String price= page.ticketPrice.getText();
+        driver.sendSMS("5555555555",price);
     }
 }
