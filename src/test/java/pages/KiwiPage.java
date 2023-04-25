@@ -44,8 +44,6 @@ public class KiwiPage {
     @FindBy(xpath = "(//*[@text='Berlin, Germany'])[1]")
     public WebElement berlin;
 
-    @FindBy(xpath = "(//*[@text='Anytime'])[1]")
-    private WebElement anyTimeButton;
 
     @FindBy(id = "com.skypicker.main:id/saveButton")
      public WebElement setDateButton;
@@ -67,6 +65,9 @@ public class KiwiPage {
 
     @FindBy(xpath = "(//*[@class='android.widget.TextView'])[12]")
     public WebElement ticketPrice;
+
+    @FindBy(xpath = "(//*[@text='Anytime'])[1]")
+    private WebElement anyTimeButton;
 
     public void anyTimeButtonClick(){
         anyTimeButton.click();
